@@ -24,5 +24,10 @@ Countdown: 0
 Réponses aux questions : 
 
 1. Pour chaque élément de classe de la figure 2, expliquez pourquoi il est public, privé ou protégé.
-2. Expliquez quelle est l’utilité de la méthode de classe (statique) call_callback().
+
+
+3. Expliquez quelle est l’utilité de la méthode de classe (statique) call_callback().
+
+La fonction call_callback() joue le rôle de "handler" : lorsqu'un signal est reçu, l'OS déclenche call_callback(). En pratique, cette fonction se charge d'appeler la fonction "callback" implémentée dans la fonction dérivée avec laquelle on travaille. 
+
 3. Spécifiez quelles opérations doivent être définies comme virtuelles. 
