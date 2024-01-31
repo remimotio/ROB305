@@ -28,9 +28,14 @@ Réponses aux questions :
 
 1. Pour chaque élément de classe de la figure 2, expliquez pourquoi il est public, privé ou protégé.
 
+Le constructeur, le destructeur et la fonction start sont déclarés comme publics pour pouvoir créer, détruire et initialiser des objets Timer : il faut pouvoir y accéder en dehors de la classe Timer.
+Le paramètre timer_t désigne l'identifiant du timer, il n'y a pas de raisons pour un utilisateur d'y accéder en dehors de la classe. La fonction call_callback est interne, appelée par la classe pour appeler les fonctions callback des classes dérivées : call_callback n'a pas pour but d'être appelée directement en dehors de la classe Timer.
+Enfin, la fonction callback est déclarée comme protégée afin de pouvoir être utilisée par les classes dérivées, qui en ont besoin, mais pas par des utilisateurs : le niveau d'accès "protégé" les empêche de la modifier en dehors de la classe.
 
-3. Expliquez quelle est l’utilité de la méthode de classe (statique) call_callback().
+2. Expliquez quelle est l’utilité de la méthode de classe (statique) call_callback().
 
-La fonction call_callback() joue le rôle de "handler" : lorsqu'un signal est reçu, l'OS déclenche call_callback(). En pratique, cette fonction se charge d'appeler la fonction "callback" implémentée dans la fonction dérivée avec laquelle on travaille. 
+La fonction call_callback() joue le rôle de "handler" : lorsqu'un signal est reçu, l'OS déclenche call_callback(). En pratique, cette fonction se charge d'appeler la fonction "callback" implémentée dans la fonction dérivée avec laquelle on travaille. L'utilité d'utiliser des fonctions dérivées est d'implémenter pour chaque type de données une forme adaptée de la fonction, et ainsi de pouvoir traiter de nombreux cas de figure tout en préservant une certaine simplicité du code (notion de polymorphisme).
 
-3. Spécifiez quelles opérations doivent être définies comme virtuelles. 
+3. Spécifiez quelles opérations doivent être définies comme virtuelles.
+
+Le destructeur ~Time() doit être défini comme virtuel, puisque la classe Time l'est. Chaque classe dérivée aura son implémentation spécifique du destructeur. Et callback() doit être définie comme virtuelle, puisqu'il s'agit d'une méthode abstraite. La différence entre abstrait et virtuel est qu'une opération abstraite n'est pas implémentée dans la classe de base, uniquement dans les classes dérivées, tandis qu'une opération virtuelle non abstraite possède une implémentation dans la classe originelle. 
