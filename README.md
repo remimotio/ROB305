@@ -39,3 +39,38 @@ La fonction call_callback() joue le rôle de "handler" : lorsqu'un signal est re
 3. Spécifiez quelles opérations doivent être définies comme virtuelles.
 
 Le destructeur ~Time() doit être défini comme virtuel, puisque la classe Time l'est. Chaque classe dérivée aura son implémentation spécifique du destructeur. Et callback() doit être définie comme virtuelle, puisqu'il s'agit d'une méthode abstraite. La différence entre abstrait et virtuel est qu'une opération abstraite n'est pas implémentée dans la classe de base, uniquement dans les classes dérivées, tandis qu'une opération virtuelle non abstraite possède une implémentation dans la classe originelle. 
+
+TD n°3 : 
+- [TD-1] Mesure de temps et échantillonage en temps - Partie c) Fonction simple consommant du GPU
+- [TD-2] Familiarisation avec l'API multitâches pthread - Partie a) Exécution sur plusieurs tâches sans mutex
+- [TD-2] Familiarisation avec l'API multitâches pthread - Partie b) Exécution sur plusieurs tâches avec mutex
+
+- [TD-1] Mesure de temps et échantillonage en temps - Partie c) Fonction simple consommant du GPU
+
+Instructions de compilation :  
+
+Puis pour l'exécution : ./
+
+On voit apparaître dans le terminal : 
+
+Réponses aux questions : 
+
+- [TD-2] Familiarisation avec l'API multitâches pthread - Partie a) Exécution sur plusieurs tâches sans mutex
+
+Instructions de compilation :  
+
+Puis pour l'exécution : ./
+
+On voit apparaître dans le terminal : 
+
+Réponses aux questions : 
+
+- [TD-2] Familiarisation avec l'API multitâches pthread - Partie b) Exécution sur plusieurs tâches avec mutex
+
+Instructions de compilation :  
+
+Puis pour l'exécution : ./
+
+On voit apparaître dans le terminal : 
+
+Réponses aux questions : 
