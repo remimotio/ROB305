@@ -65,9 +65,9 @@ nanosecondes: 815027632
 secondes: 8
 nanosecondes: 490627047
 
-Réponses aux questions : 
-
 2) [TD-2] Familiarisation avec l'API multitâches pthread - Partie a) Exécution sur plusieurs tâches sans mutex
+
+Commenter le main() de timespec.cpp pour empêcher la présence de deux fonctions main()
 
 Instructions de compilation : g++ -std=c++14 -Wall -Wextra main3.cpp timespec.cpp -o countersansmutex -lrt -lpthread
 
@@ -85,7 +85,14 @@ nanosecondes: 532319382
 
 Réponses aux questions : 
 
+Nous pouvons observer que la valeur du compteur n'est pas correcte, au lieu de valoir 2e+09 elle vaut 1.12902e+09. 
+Ce phénomène est dû au fait que l'opération d'incrémentation d'un double n'est pas atomique. Le programme prend la variable, la met dans le registre de données, l'incrémente dans le registre, puis remet la valeur dans la mémoire. Or, la seconde tâche préempte la valeur du compteur avant que la première ait pu retourner la valeur. Par conséquent, au lieu de prendre le résultat de la première tâche, la seconde tâche repart de la valeur "initiale", avant son passage dans le premier thread : on a "perdu" une partie de l'action de la première tâche. 
+
+Pour remédier à ce problème, on introduit la notion de mutex (mutual exclusion) : un jeton fourni par l'OS, donné à la tâche jusqu'à la fin de son opération.
+
 3) [TD-2] Familiarisation avec l'API multitâches pthread - Partie b) Exécution sur plusieurs tâches avec mutex
+
+Commenter le main() de timespec.cpp pour empêcher la présence de deux fonctions main()
 
 Instructions de compilation : g++ -std=c++14 -Wall -Wextra main4.cpp timespec.cpp -o counteravecmutex -lrt -lpthread
 
@@ -101,4 +108,4 @@ nanosecondes: 497567339
 secondes: 125
 nanosecondes: 477971305
 
-Réponses aux questions : 
+Réponses aux questions : grâce à l'implémentation des mutex, la valeur du compteur est bien correcte cette fois-ci.
