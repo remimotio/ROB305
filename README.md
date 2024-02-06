@@ -4,6 +4,8 @@ Instructions de compilation : g++ -std=c++14 -Wall -Wextra timespec.cpp -o times
 
 Puis pour l'exécution : ./timespec temps_1 temps_2 où temps_1 et temps_2 peuvent être des flottants positifs ou négatifs
 
+*****
+
 TD n°2 : [TD-3] Classes pour la gestion du temps - Partie b) Classe Timer
 
 Instructions de compilation :  g++ -std=c++14 -Wall -Wextra main.cpp Timer.cpp CountDown.cpp -o Countdown -lrt -lpthread
@@ -40,14 +42,14 @@ La fonction call_callback() joue le rôle de "handler" : lorsqu'un signal est re
 
 Le destructeur ~Time() doit être défini comme virtuel, puisque la classe Time l'est. Chaque classe dérivée aura son implémentation spécifique du destructeur. Et callback() doit être définie comme virtuelle, puisqu'il s'agit d'une méthode abstraite. La différence entre abstrait et virtuel est qu'une opération abstraite n'est pas implémentée dans la classe de base, uniquement dans les classes dérivées, tandis qu'une opération virtuelle non abstraite possède une implémentation dans la classe originelle. 
 
+*****
+
 TD n°3 : 
 - [TD-1] Mesure de temps et échantillonage en temps - Partie c) Fonction simple consommant du GPU
 - [TD-2] Familiarisation avec l'API multitâches pthread - Partie a) Exécution sur plusieurs tâches sans mutex
 - [TD-2] Familiarisation avec l'API multitâches pthread - Partie b) Exécution sur plusieurs tâches avec mutex
 
-*****
-
-- [TD-1] Mesure de temps et échantillonage en temps - Partie c) Fonction simple consommant du GPU
+1) [TD-1] Mesure de temps et échantillonage en temps - Partie c) Fonction simple consommant du GPU
 
 Instructions de compilation : g++ -std=c++14 -Wall -Wextra main2.cpp timespec.cpp -o counterchrono
 
@@ -65,22 +67,38 @@ nanosecondes: 490627047
 
 Réponses aux questions : 
 
-- [TD-2] Familiarisation avec l'API multitâches pthread - Partie a) Exécution sur plusieurs tâches sans mutex
+2) [TD-2] Familiarisation avec l'API multitâches pthread - Partie a) Exécution sur plusieurs tâches sans mutex
 
-Instructions de compilation :  
+Instructions de compilation : g++ -std=c++14 -Wall -Wextra main3.cpp timespec.cpp -o countersansmutex -lrt -lpthread
 
-Puis pour l'exécution : ./
+Puis pour l'exécution : ./countersansmutex nLoops nTasks où nLoops et nTasks sont des entiers naturels
 
-On voit apparaître dans le terminal : 
+Par exemple, pour ./countersansmutex 1000000000 2, on voit apparaître dans le terminal : 
+
+secondes: 1707215198
+nanosecondes: 162107132
+Counter value = 1.12902e+09
+secondes: 1707215208
+nanosecondes: 694426514
+secondes: 10
+nanosecondes: 532319382
 
 Réponses aux questions : 
 
-- [TD-2] Familiarisation avec l'API multitâches pthread - Partie b) Exécution sur plusieurs tâches avec mutex
+3) [TD-2] Familiarisation avec l'API multitâches pthread - Partie b) Exécution sur plusieurs tâches avec mutex
 
-Instructions de compilation :  
+Instructions de compilation : g++ -std=c++14 -Wall -Wextra main4.cpp timespec.cpp -o counteravecmutex -lrt -lpthread
 
-Puis pour l'exécution : ./
+Puis pour l'exécution : ./counteravecmutex nLoops nTasks protected où nLoops et nTasks sont des entiers naturels (et "protected" est juste le mot en tant que tel)
 
-On voit apparaître dans le terminal : 
+Par exemple, pour ./counteravecmutex 1000000000 2 protected, on voit apparaître dans le terminal : 
+
+secondes: 1707215321
+nanosecondes: 19596034
+Counter value = 2e+09
+secondes: 1707215446
+nanosecondes: 497567339
+secondes: 125
+nanosecondes: 477971305
 
 Réponses aux questions : 
