@@ -45,6 +45,8 @@ TD n°3 :
 - [TD-2] Familiarisation avec l'API multitâches pthread - Partie a) Exécution sur plusieurs tâches sans mutex
 - [TD-2] Familiarisation avec l'API multitâches pthread - Partie b) Exécution sur plusieurs tâches avec mutex
 
+*****
+
 - [TD-1] Mesure de temps et échantillonage en temps - Partie c) Fonction simple consommant du GPU
 
 Instructions de compilation :  
