@@ -108,4 +108,6 @@ nanosecondes: 497567339
 secondes: 125
 nanosecondes: 477971305
 
-Réponses aux questions : grâce à l'implémentation des mutex, la valeur du compteur est bien correcte cette fois-ci.
+Réponses aux questions : 
+
+Grâce à l'implémentation des mutex, la valeur du compteur est bien correcte cette fois-ci.
