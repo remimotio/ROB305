@@ -55,13 +55,13 @@ Puis pour l'exécution : ./counterchrono nLoops où nLoops est un entier naturel
 
 Par exemple, pour ./counterchrono 1000000000, on voit apparaître dans le terminal : 
 
-secondes: 1707213994
-nanosecondes: 321256687
+secondes: 1707214883
+nanosecondes: 324400585
 Compteur = 1e+09
-secondes: 1707213998
-nanosecondes: 775603971
-secondes: 4
-nanosecondes: 454347284
+secondes: 1707214891
+nanosecondes: 815027632
+secondes: 8
+nanosecondes: 490627047
 
 Réponses aux questions : 
 
