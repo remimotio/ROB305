@@ -49,11 +49,13 @@ TD n°3 :
 
 - [TD-1] Mesure de temps et échantillonage en temps - Partie c) Fonction simple consommant du GPU
 
-Instructions de compilation :  
+Instructions de compilation : g++ -std=c++14 -Wall -Wextra main2.cpp timespec.cpp -o counterchrono
 
-Puis pour l'exécution : ./
+Puis pour l'exécution : ./counterchrono nLoops où nLoops est un entier naturel
 
-On voit apparaître dans le terminal : 
+Par exemple, pour ./counterchrono 1000000000, on voit apparaître dans le terminal : 
+
+
 
 Réponses aux questions : 
 
