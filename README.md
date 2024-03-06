@@ -271,3 +271,7 @@ Partie c) Classe Semaphore
 Instructions de compilation : g++ -Wall -Wextra timespec.cpp PosixThread.cpp Thread2.cpp Mutex.cpp testSemaphore.cpp -g -o semaphore -lrt -lpthread
 
 Puis pour l'exécution : ./semaphore
+
+*****
+
+[TD-5] Inversion de priorité 
