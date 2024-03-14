@@ -275,3 +275,59 @@ Puis pour l'exécution : ./semaphore
 *****
 
 [TD-5] Inversion de priorité 
+
+Pour une plus grande lisibilité, on retire les print dans Calibrator.cpp et dans timespec.cpp.
+
+Instructions de compilation : g++ -Wall -Wextra timespec.cpp PosixThread.cpp Thread2.cpp Mutex.cpp Timer.cpp Calibrator.cpp CpuLoop.cpp priorite_inversee.cpp -o prioinv -lrt -lpthread
+
+Puis pour l'exécution : ./prioinv
+
+On voit alors apparaître sur le terminal :
+
+nLoops = DBL_MAX
+nLoops = DBL_MAX
+nLoops = DBL_MAX
+nLoops = DBL_MAX
+nLoops = DBL_MAX
+nLoops = DBL_MAX
+nLoops = DBL_MAX
+nLoops = DBL_MAX
+nLoops = DBL_MAX
+nLoops = DBL_MAX
+nLoops = DBL_MAX
+nLoops = DBL_MAX
+nLoops = DBL_MAX
+nLoops = DBL_MAX
+nLoops = DBL_MAX
+Résultats de la calibration : a = -21.791, b = 240756
+p_policy: 8, p_priority = 0
+nLoops = DBL_MAX
+nLoops = DBL_MAX
+nLoops = DBL_MAX
+nLoops = DBL_MAX
+Résultats de la calibration : a = 40.0123, b = 240560
+nLoops = 242
+Fin de la fonction runtime
+Calibration results A: a = 40.0123, b = 240560
+nLoops = DBL_MAX
+nLoops = DBL_MAX
+nLoops = DBL_MAX
+nLoops = DBL_MAX
+Résultats de la calibration : a = 18.5495, b = 241329
+nLoops = 241
+Fin de la fonction runtime
+Calibration results B: a = 18.5495, b = 241329
+nLoops = DBL_MAX
+nLoops = DBL_MAX
+nLoops = DBL_MAX
+nLoops = DBL_MAX
+Résultats de la calibration : a = -299.728, b = 226653
+nLoops = 211
+Fin de la fonction runtime
+Calibration results C: a = -299.728, b = 226653
+Heure de début : 1.71041e+12 ms
+Heure de fin : 1.71041e+12 ms
+Counter value = 453
+Temps d'exécution : 45963.5 ms
+
+On vérifie bien que la ressource (ici le compteur) est accédée par les threads A et C, puisque 453 = 211 + 242
