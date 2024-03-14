@@ -2,7 +2,7 @@
 
 #include <cstring> 
 #include <iostream>
-#include "timespec.hpp"
+#include "timespec.h"
 
 Mutex::Mutex()
 {
