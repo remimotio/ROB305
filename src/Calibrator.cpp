@@ -46,7 +46,7 @@ double Calibrator::nLoops(double duration_ms) // On calcule le nombre attendu de
     std::cout << "a : " << a << std::endl;
     std::cout << "duration_ms : " << duration_ms << std::endl;
     std::cout << "b : " << b << std::endl;
-    return a * duration_ms + b;
+    return floor((a * duration_ms + b)/1000);
 }
 
 void Calibrator::callback()
