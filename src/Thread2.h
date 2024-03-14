@@ -7,7 +7,7 @@
 
 class Thread: public PosixThread
 {
-protected:
+public:
 	timespec start_time;
 	bool started;
 	timespec stop_time;
