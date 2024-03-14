@@ -272,6 +272,112 @@ Instructions de compilation : g++ -Wall -Wextra timespec.cpp PosixThread.cpp Thr
 
 Puis pour l'exécution : ./semaphore
 
+On voit alors apparaître dans le terminal :
+
+secondes: 1709807884
+nanosecondes: 747975920
+secondes: 1709807884
+nanosecondes: 748142653
+secondes: 1709807884
+nanosecondes: 748249989
+secondes: 1709807884
+nanosecondes: 748372822
+secondes: 1709807884
+nanosecondes: 748632642
+secondes: 1709807884
+nanosecondes: 748780878
+secondes: 1709807884
+nanosecondes: 748912920
+secondes: 1709807884
+nanosecondes: 749169144
+secondes: 1709807884
+nanosecondes: 749579784
+secondes: 1709807884
+nanosecondes: 750038157
+Jeton donné. Compteur: 1
+Jeton donné. Compteur: 2
+Jeton donné. Compteur: 3
+Jeton donné. Compteur: 4
+Jeton donné. Compteur: 5
+Jeton récupéré. Compteur: 4
+Jeton récupéré. Compteur: 3
+Jeton récupéré. Compteur: 2
+Jeton récupéré. Compteur: 1
+Jeton récupéré. Compteur: 0
+Jeton donné. Compteur: 1
+Jeton donné. Compteur: 2
+Jeton donné. Compteur: 3
+Jeton donné. Compteur: 4
+Jeton donné. Compteur: 5
+Jeton récupéré. Compteur: 4
+Jeton récupéré. Compteur: 3
+Jeton récupéré. Compteur: 2
+Jeton récupéré. Compteur: 1
+Jeton récupéré. Compteur: 0
+Jeton donné. Compteur: 1
+Jeton donné. Compteur: 2
+Jeton donné. Compteur: 3
+Jeton donné. Compteur: 4
+Jeton donné. Compteur: 5
+Jeton récupéré. Compteur: 4
+Jeton récupéré. Compteur: 3
+Jeton récupéré. Compteur: 2
+Jeton récupéré. Compteur: 1
+Jeton récupéré. Compteur: 0
+Tous les jetons ont été produits ou consommés.
+
+Par ailleurs, d'autres tentatives ont montré que les tâches consommatrices ne peuvent pas consommer plus de jetons que disponibles, que l'appel de take() est bien bloquant, et que le mécanisme de saturation fonctionne.
+
+Par exemple, si l'on définit Mutex::semaphore semaphore(0,4) -le nombre maximal de jetons pour arriver à saturation a été réduit de 1 tandis que le reste du code est inchangé- on voit s'afficher :
+
+secondes: 1709808394
+nanosecondes: 613907466
+secondes: 1709808394
+nanosecondes: 614257668
+secondes: 1709808394
+nanosecondes: 614365802
+secondes: 1709808394
+nanosecondes: 614474690
+secondes: 1709808394
+nanosecondes: 614576559
+secondes: 1709808394
+nanosecondes: 614692371
+secondes: 1709808394
+nanosecondes: 614808694
+secondes: 1709808394
+nanosecondes: 614879938
+secondes: 1709808394
+nanosecondes: 614993173
+secondes: 1709808394
+nanosecondes: 615072708
+Jeton donné. Compteur: 1
+Jeton donné. Compteur: 2
+Jeton donné. Compteur: 3
+Jeton donné. Compteur: 4
+Saturation, jeton non donné
+Jeton récupéré. Compteur: 3
+Jeton récupéré. Compteur: 2
+Jeton récupéré. Compteur: 1
+Jeton récupéré. Compteur: 0
+Jeton donné. Compteur: 1
+Jeton donné. Compteur: 2
+Jeton donné. Compteur: 3
+Jeton récupéré. Compteur: 2
+Jeton donné. Compteur: 3
+Jeton donné. Compteur: 4
+Jeton récupéré. Compteur: 3
+Jeton récupéré. Compteur: 2
+Jeton donné. Compteur: 3
+Jeton donné. Compteur: 4
+Saturation, jeton non donné
+Saturation, jeton non donné
+Saturation, jeton non donné
+Jeton récupéré. Compteur: 3
+Jeton récupéré. Compteur: 2
+Jeton récupéré. Compteur: 1
+Jeton récupéré. Compteur: 0
+^C
+
 *****
 
 [TD-5] Inversion de priorité 
