@@ -195,7 +195,7 @@ cpuLoop initialisé
 a : 20.4113
 duration_ms : 2000
 b : 207918
-nLoops = 248740
+nLoops = 248
 Fin de la fonction runtime
 runtime terminé
 Calibration results: a = 20.4113, b = 207918
