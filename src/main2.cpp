@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "timespec.hpp"
+#include "timespec.h"
 
 void incr(unsigned int nLoops, double* pCounter)
 {
@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
 	if (argc != 2)
 	{
 		std::cerr << "Un argument, nLoops" << std::endl;
-        	return 1;
+        return 1;
 	}
 
 	struct timespec start_time = timespec_now();

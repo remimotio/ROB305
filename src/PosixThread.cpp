@@ -1,5 +1,5 @@
 #include "PosixThread.h"
-#include "timespec.hpp"
+#include "timespec.h"
 
 PosixThread::PosixThread() : posixId(0), isActive(false)  // Faire l'initialisation ici, permet de tout initialiser même les constantes. Initialiser dans le bon ordre.
 {

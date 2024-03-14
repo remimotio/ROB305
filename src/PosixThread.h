@@ -14,7 +14,7 @@ public:
     {
     public:
         Exception(const std::string& message);
-    };  // Cette accolade est correcte
+    }; 
 
 private:
     pthread_t posixId;
@@ -31,7 +31,7 @@ public:
     void join();
     bool join(double timeout_ms);
     bool setScheduling(int policy, int priority);
-    bool getScheduling(int* p_policy, int* p_priority); // bool plutôt que void ?
+    bool getScheduling(int* p_policy, int* p_priority); 
 };
 
 #endif

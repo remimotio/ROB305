@@ -1,4 +1,4 @@
-#include "timespec.hpp"
+#include "timespec.h"
 #include <vector>
 #include "Thread.h"
 
@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
     if (argc != 3)
     {
         std::cerr << "Deux arguments" << std::endl;
-            return 1;
+        return 1;
     }
 
     double counter = 0.0;

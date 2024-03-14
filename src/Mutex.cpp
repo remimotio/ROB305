@@ -13,6 +13,20 @@ Mutex::Mutex()
 	pthread_cond_init(&posixCondId, nullptr);
 }
 
+Mutex::Mutex(bool isInversionSafe)
+{
+    pthread_mutexattr_init(&mutexAttribute);
+    pthread_mutexattr_settype(&mutexAttribute, PTHREAD_MUTEX_RECURSIVE);
+
+    if (isInversionSafe)
+    {
+        pthread_mutexattr_setprotocol(&mutexAttribute, PTHREAD_PRIO_INHERIT);
+    }
+
+    pthread_mutex_init(&posixMutexId, &mutexAttribute);
+    pthread_cond_init(&posixCondId, nullptr);
+}
+
 Mutex::~Mutex()
 {
 	pthread_mutex_destroy(&posixMutexId);
@@ -65,16 +79,14 @@ Mutex::Monitor::Monitor(Mutex& mutex) : mutex(mutex) // initialisation
 
 void Mutex::Monitor::wait()
 {
-	mutex.lock();
 	mutex.unlock();
-        pthread_cond_wait(&mutex.posixCondId, &mutex.posixMutexId);
-	
+    pthread_cond_wait(&mutex.posixCondId, &mutex.posixMutexId);
 }
 
 bool Mutex::Monitor::wait(double timeout_ms)
 {
 	timespec timeout = timespec_from_ms(timeout_ms);
-	mutex.lock();
+
 	mutex.unlock(); 
      
     int result = pthread_cond_timedwait(&mutex.posixCondId, &mutex.posixMutexId, &timeout);
@@ -111,7 +123,8 @@ Mutex::Lock::Lock(Mutex& mutex) : Monitor(mutex) // Quel constucteur de la class
 
 Mutex::Lock::Lock(Mutex& mutex, double timeout_ms) : Monitor(mutex)
 {
-    if (!Monitor::wait(timeout_ms)) {
+    if (!Monitor::wait(timeout_ms)) 
+    {
         throw Monitor::TimeoutException();
     }
 }
@@ -119,7 +132,7 @@ Mutex::Lock::Lock(Mutex& mutex, double timeout_ms) : Monitor(mutex)
 Mutex::Lock::~Lock()
 {
 	Monitor::notifyAll();
-	mutex.unlock();
+	Monitor::mutex.unlock();
 }
 
 Mutex::Semaphore::Semaphore(unsigned initCount, unsigned maxCount) : counter(initCount), maxCount(maxCount)
@@ -128,7 +141,9 @@ Mutex::Semaphore::Semaphore(unsigned initCount, unsigned maxCount) : counter(ini
 
 void Mutex::Semaphore::give()
 {
-    mutexInstance.lock();
+    Mutex mutexInstance;
+
+    mutexInstance.lock(); 
 
     if (counter < maxCount)
     {
@@ -140,14 +155,15 @@ void Mutex::Semaphore::give()
         std::cout << "Saturation, jeton non donné" << std::endl;
     }
 
-    mutexInstance.unlock();
+    mutexInstance.unlock(); 
 }
 
 void Mutex::Semaphore::take()
 {
+    Mutex mutexInstance;
     Monitor monitorInstance(mutexInstance);
 
-    mutexInstance.lock();
+    mutexInstance.lock(); 
 
     while (counter == 0)
     {
@@ -157,28 +173,38 @@ void Mutex::Semaphore::take()
     --counter;
     std::cout << "Jeton récupéré. Compteur: " << counter << std::endl;
 
-    mutexInstance.unlock();
+    mutexInstance.unlock(); 
 }
 
 bool Mutex::Semaphore::take(double timeout_ms)
 {
+    Mutex mutexInstance;
     Monitor monitorInstance(mutexInstance);
 
-    bool success = monitorInstance.wait(timeout_ms);
+    mutexInstance.lock(); 
+
+    bool success = true;
+    while (counter == 0)
+    {
+        success = monitorInstance.wait(timeout_ms);
+        if (!success)
+        {
+            std::cout << "Timeout. Aucun jeton pris." << std::endl;
+            break;
+        }
+    }
 
     if (success)
     {
-        mutexInstance.lock();
         --counter;
         std::cout << "Jeton pris. Compteur: " << counter << std::endl;
-        mutexInstance.unlock();
     }
-    else
-    {
-        std::cout << "Timeout. Aucun jeton pris." << std::endl;
-    }
+
+    mutexInstance.unlock();
 
     return success;
 }
+
+
 
 

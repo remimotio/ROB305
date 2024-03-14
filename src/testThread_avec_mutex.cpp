@@ -1,4 +1,4 @@
-#include "timespec.hpp"
+#include "timespec.h"
 #include "Thread2.h"
 #include "Mutex.h"
 #include <vector>
@@ -19,10 +19,11 @@ public:
     void run();
 
 public:
-    MyThread(Data& data) : sharedData(data) {}
+    MyThread(Data& data) : sharedData(data), starting_time(timespec_now()) {}
 
 private:
     Data& sharedData;
+    timespec starting_time;
 };
 
 void MyThread::run()
@@ -56,20 +57,20 @@ int main(int argc, char* argv[])
     sharedData.nLoops = std::stoul(argv[1]);
 
     MyThread monThread(sharedData);
+    
+    unsigned long nTasks = std::stoul(argv[2])-1;
+    
+    std::vector<MyThread> incrementThread(nTasks, MyThread(sharedData));
+    
+    double starting_time = monThread.startTime_ms();
+    std::cout << "Heure de début : " << starting_time << " ms" << std::endl;
 
     if (!monThread.start()) 
     {
         std::cerr << "Thread principal non démarré" << std::endl;
         return 1;
     }
-
-    unsigned long nTasks = std::stoul(argv[2])-1;
-
-    std::vector<MyThread> incrementThread(nTasks, MyThread(sharedData));
-
-    double starting_time = monThread.startTime_ms();
-    std::cout << "Heure de début : " << starting_time << " ms" << std::endl;
-
+    
     for (auto& thid : incrementThread)
     {
         if (!thid.start()) 

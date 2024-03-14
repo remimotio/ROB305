@@ -2,7 +2,7 @@
 #include <string>
 #include <pthread.h>
 #include <vector>
-#include "timespec.hpp"
+#include "timespec.h"
 
 struct Data
 {
@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
 	if (argc != 3)
 	{
 		std::cerr << "Deux arguments" << std::endl;
-        	return 1;
+        return 1;
 	}
 
 	Data data = {std::stoul(argv[1]), 0.0};

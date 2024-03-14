@@ -2,7 +2,7 @@
 #include <string>
 #include <pthread.h>
 #include <vector>
-#include "timespec.hpp"
+#include "timespec.h"
 
 struct Data
 {
@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
 	if (argc != 4)
 	{
 		std::cerr << "Trois arguments" << std::endl;
-        	return 1;
+        return 1;
 	}
 
 	Data data = {std::stoul(argv[1]), 0.0, PTHREAD_MUTEX_INITIALIZER}; 
@@ -45,11 +45,11 @@ int main(int argc, char* argv[])
 	if (std::string(argv[3]) == "protected")
 	{
 		if (pthread_mutex_init(&data.mutex, nullptr) != 0)
-        	{
-            		std::cerr << "Mutex initialization failed" << std::endl;
-            		return 1;
-    		}
+        {
+            std::cerr << "Mutex initialization failed" << std::endl;
+            return 1;
     	}
+    }
 
 	timespec start_time = timespec_now();
 
@@ -64,9 +64,9 @@ int main(int argc, char* argv[])
 	}
 
 	if (std::string(argv[3]) == "protected")
-    	{
-        	pthread_mutex_destroy(&data.mutex);
-    	}
+    {
+        pthread_mutex_destroy(&data.mutex);
+    }
 
 	std::cout << "Counter value = " << data.counter << std::endl;
 

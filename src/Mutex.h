@@ -18,6 +18,7 @@ protected:
 
 public:
 	Mutex();
+	Mutex(bool isInversionSafe);
 	~Mutex(); // Pas besoin de le déclarer virtuel, car on ne veut pas faire de classes dérivées spécifiques et de polymorphisme
 
 protected:
@@ -54,16 +55,14 @@ public:
 class Mutex::Semaphore
 {
 protected:
-    unsigned counter;
-    unsigned maxCount;
-    Mutex mutexInstance;
+	unsigned counter;
+	unsigned maxCount;
 
 public:
-    Semaphore(unsigned initCount = 0, unsigned maxCount = UINT_MAX);
-    void give();
-    void take();
-    bool take(double timeout_ms);
+	Semaphore(unsigned initCount = 0, unsigned maxCount = UINT_MAX);
+	void give();
+	void take();
+	bool take(double timeout_ms);
 };
-
 
 #endif

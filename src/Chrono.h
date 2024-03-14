@@ -1,7 +1,7 @@
 #ifndef Chrono_h_INCLUDED
 #define Chrono_h_INCLUDED
 
-#include "timespec.hpp"
+#include "timespec.h"
 
 class Chrono
 {

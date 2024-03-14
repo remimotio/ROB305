@@ -3,22 +3,22 @@
 #include <iostream>
 #include <unistd.h>
 
-#include "timespec.hpp"
+#include "timespec.h"
 
 Calibrator::Calibrator(double samplingPeriod_ms, unsigned nSamples) : Timer(), a(0.0), b(0.0), samples() // Timer() appelle le constructeur de la classe Timer
 {
     for (unsigned i = 0; i < nSamples; ++i) // Boucle de calibration. Mesure le temps pris par les boucles et calcule le nombre de boucles par unité de temps. 
     {
-	std::cout << "i : " << i << std::endl;
+	    std::cout << "i : " << i << std::endl;
         Looper looper;
         double startTime = timespec_to_ms(timespec_now());
- 	double nboucles = looper.runLoop();
-	std::cout << "nboucles : " << nboucles << std::endl;
+ 	    double nboucles = looper.runLoop();
+	    std::cout << "nboucles : " << nboucles << std::endl;
         double endTime = timespec_to_ms(timespec_now());    
 
         double duree = endTime - startTime;
         samples.push_back(nboucles / duree); // Nombre de boucles par unité de temps
-	std::cout << "Nb boucles / unité tps = " << nboucles / duree << std::endl;
+	    std::cout << "Nb boucles / unité tps = " << nboucles / duree << std::endl;
     }
 
     // Régression linéaire pour déterminer les paramètres de calibration a et b. Méthode des moindres carrés. 

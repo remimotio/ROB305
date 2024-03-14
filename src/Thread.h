@@ -3,7 +3,7 @@
 
 #include "PosixThread.h"
 
-#include "timespec.hpp"
+#include "timespec.h"
 
 class Thread: public PosixThread
 {

@@ -1,77 +1,79 @@
+#include "Thread.h"
 #include "Mutex.h"
-#include "Thread2.h"
-#include "timespec.hpp"
 #include <vector>
 
-#include <thread> // Pour std::this_thread
-#include <chrono> // Pour std::chrono
+// "Instanciez un sémaphore initialement vide partagé par 2 types de tâches"
+Mutex::Semaphore semaphore(0, 5); 
 
-const int nCons = 5; // Consumer threads
-const int tokensPerProducer = 3; 
-const int nProd = 5; // Producer threads
+// "Faites tourner nCons tâches consommatrices et nProd tâches productrices"
+const int nProd = 5;
+const int nCons = 5;
 
-class MyThread : public Thread {
+class ProducerTask : public Thread
+{
 public:
-    MyThread() = default;
-    MyThread(const MyThread&) = delete; 
-    MyThread(MyThread&& other) noexcept; 
-    ~MyThread() override;
+    void run() override
+    {
+        for (int i = 0; i < 3; ++i) // Produit 3 jetons
+        {
+            sleep_ms(100); // Fait quelque chose
 
-    void run() override;
-
-private:
-    MyThread& operator=(const MyThread&) = delete;
-    MyThread& operator=(MyThread&&) = delete; 
-
-private:
-    std::thread nativeThread;
+            semaphore.give(); // Donne le jeton au sémaphore
+        }
+    }
 };
 
-MyThread::MyThread(MyThread&& other) noexcept : Thread(std::move(other)), nativeThread(std::move(other.nativeThread)) {}
-
-MyThread::~MyThread() {
-    if (nativeThread.joinable()) {
-        nativeThread.join();
-    }
-}
-
-
-Mutex::Semaphore semaphore(0, nCons * tokensPerProducer);
-
-void MyThread::run()
+class ConsumerTask : public Thread
 {
-    while (true)
+public:
+    void run() override
     {
-        if (!semaphore.take(500)) // Timeout
+        for (int i = 0; i < 3; ++i) // Consomme 3 jetons
         {
-            break;
+            sleep_ms(150); // Fait quelque chose
+
+            semaphore.take(); // Prend le jeton au sémaphore
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(150));
     }
-}
+};
 
-int main() {
-    std::vector<MyThread> threads;
+int main()
+{
+    std::vector<Thread*> threads;
 
-    threads.reserve(nProd + nCons); 
+    try
+    {
+        // Création des tâches productrices
+        for (int i = 0; i < nProd; ++i)
+        {
+            threads.push_back(new ProducerTask());
+        }
 
-    for (int i = 0; i < nProd; ++i) {
-        threads.emplace_back();
-        threads.back().start();
+        // Création des tâches consommatrices
+        for (int i = 0; i < nCons; ++i)
+        {
+            threads.push_back(new ConsumerTask());
+        }
+
+        for (Thread* thread : threads)
+        {
+            thread->start();
+        }
+
+        for (Thread* thread : threads)
+        {
+            thread->join();
+            delete thread;
+        }
+        
     }
-
-    for (int i = 0; i < nCons; ++i) {
-        threads.emplace_back();
-        threads.back().start();
+    catch (const std::exception& e)
+    {
+        std::cerr << "Exception : " << e.what() << std::endl;
     }
-
-    for (auto& thread : threads) {
-        thread.join();
-    }
-
+    
     std::cout << "Tous les jetons ont été produits ou consommés." << std::endl;
 
     return 0;
 }
-
 
